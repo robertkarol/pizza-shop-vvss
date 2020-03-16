@@ -1,6 +1,6 @@
 package pizzashop.repository;
 
-import pizzashop.model.MenuDataModel;
+import pizzashop.model.MenuItem;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 public class MenuRepository {
     private static String filename = "data/menu.txt";
-    private List<MenuDataModel> listMenu;
+    private List<MenuItem> listMenu;
 
     public MenuRepository(){
     }
@@ -23,7 +23,7 @@ public class MenuRepository {
             br = new BufferedReader(new FileReader(file));
             String line = null;
             while((line=br.readLine())!=null){
-                MenuDataModel menuItem=getMenuItem(line);
+                MenuItem menuItem=getMenuItem(line);
                 listMenu.add(menuItem);
             }
             br.close();
@@ -34,17 +34,17 @@ public class MenuRepository {
         }
     }
 
-    private MenuDataModel getMenuItem(String line){
-        MenuDataModel item=null;
+    private MenuItem getMenuItem(String line){
+        MenuItem item=null;
         if (line==null|| line.equals("")) return null;
         StringTokenizer st=new StringTokenizer(line, ",");
         String name= st.nextToken();
         double price = Double.parseDouble(st.nextToken());
-        item = new MenuDataModel(name, 0, price);
+        item = new MenuItem(name, 0, price);
         return item;
     }
 
-    public List<MenuDataModel> getMenu(){
+    public List<MenuItem> getMenu(){
         readMenu();//create a new menu for each table, on request
         return listMenu;
     }

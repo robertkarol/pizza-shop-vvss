@@ -8,9 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import pizzashop.model.MenuDataModel;
-import pizzashop.gui.OrdersGUI;
-import pizzashop.service.PaymentAlert;
+import pizzashop.model.MenuItem;
+import pizzashop.model.PaymentType;
 import pizzashop.service.PizzaService;
 
 import java.util.Calendar;
@@ -58,8 +57,8 @@ public class OrdersGUIController {
     private int tableNumber;
 
     public ObservableList<String> observableList;
-    private TableView<MenuDataModel> table = new TableView<MenuDataModel>();
-    private ObservableList<MenuDataModel> menuData;// = FXCollections.observableArrayList();
+    private TableView<MenuItem> table = new TableView<MenuItem>();
+    private ObservableList<MenuItem> menuData;// = FXCollections.observableArrayList();
     private Calendar now = Calendar.getInstance();
     private static double totalAmount;
 
@@ -70,6 +69,52 @@ public class OrdersGUIController {
         this.tableNumber=tableNumber;
         initData();
 
+    }
+
+    public void showPaymentAlert() {
+        Alert paymentAlert = new Alert(Alert.AlertType.CONFIRMATION);
+
+        paymentAlert.setTitle("Payment for Table "+tableNumber);
+        paymentAlert.setHeaderText("Total amount: " + totalAmount);
+        paymentAlert.setContentText("Please choose payment option");
+
+        ButtonType cardPayment = new ButtonType("Pay by Card");
+        ButtonType cashPayment = new ButtonType("Pay Cash");
+        ButtonType cancel = new ButtonType("Cancel");
+
+        paymentAlert.getButtonTypes().setAll(cardPayment, cashPayment, cancel);
+        Optional<ButtonType> result = paymentAlert.showAndWait();
+
+        if (result.get() == cardPayment) {
+            cardPayment();
+            service.addPayment(tableNumber, PaymentType.Card,totalAmount);
+        } else if (result.get() == cashPayment) {
+            cashPayment();
+            service.addPayment(tableNumber, PaymentType.Cash,totalAmount);
+        } else if (result.get() == cancel) {
+            cancelPayment();
+        } else {
+            cancelPayment();
+        }
+    }
+
+    private void cardPayment() {
+        System.out.println("--------------------------");
+        System.out.println("Paying by card...");
+        System.out.println("Please insert your card!");
+        System.out.println("--------------------------");
+    }
+    private void cashPayment() {
+        System.out.println("--------------------------");
+        System.out.println("Paying cash...");
+        System.out.println("Please show the cash...!");
+        System.out.println("--------------------------");
+    }
+    private void cancelPayment()
+    {
+        System.out.println("--------------------------");
+        System.out.println("Payment choice needed...");
+        System.out.println("--------------------------");
     }
 
     private void initData(){
@@ -104,8 +149,7 @@ public class OrdersGUIController {
             System.out.println("Table: " + tableNumber);
             System.out.println("Total: " + getTotalAmount());
             System.out.println("--------------------------");
-            PaymentAlert pay = new PaymentAlert(service);
-            pay.showPaymentAlert(tableNumber, this.getTotalAmount());
+            showPaymentAlert();
         });
     }
 
@@ -114,16 +158,16 @@ public class OrdersGUIController {
         //populate table view with menuData from OrderGUI
         table.setEditable(true);
         tableMenuItem.setCellValueFactory(
-                new PropertyValueFactory<MenuDataModel, String>("menuItem"));
+                new PropertyValueFactory<MenuItem, String>("menuItem"));
         tablePrice.setCellValueFactory(
-                new PropertyValueFactory<MenuDataModel, Double>("price"));
+                new PropertyValueFactory<MenuItem, Double>("price"));
         tableQuantity.setCellValueFactory(
-                new PropertyValueFactory<MenuDataModel, Integer>("quantity"));
+                new PropertyValueFactory<MenuItem, Integer>("quantity"));
 
         //bind pizzaTypeLabel and quantity combo box with the selection on the table view
-        orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuDataModel>() {
+        orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuItem>() {
         @Override
-        public void changed(ObservableValue<? extends MenuDataModel> observable, MenuDataModel oldValue, MenuDataModel newValue) {
+        public void changed(ObservableValue<? extends MenuItem> observable, MenuItem oldValue, MenuItem newValue) {
            pizzaTypeLabel.textProperty().bind(newValue.menuItemProperty());
               }
         });
@@ -135,9 +179,9 @@ public class OrdersGUIController {
 
         //Controller for Add to order Button
         addToOrder.setOnAction(event -> {
-            orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuDataModel>(){
+            orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuItem>(){
             @Override
-            public void changed(ObservableValue<? extends MenuDataModel> observable, MenuDataModel oldValue, MenuDataModel newValue){
+            public void changed(ObservableValue<? extends MenuItem> observable, MenuItem oldValue, MenuItem newValue){
             oldValue.setQuantity(orderQuantity.getValue());
             orderTable.getSelectionModel().selectedItemProperty().removeListener(this);
                 }
