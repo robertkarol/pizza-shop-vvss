@@ -50,7 +50,9 @@ public class MenuRepository {
     }
 
     public List<MenuDataModel> getMenu(){
-        readMenu();//create a new menu for each table, on request
+        if (listMenu == null)   // C01: added if statement to load data only once
+                                // the same data was loaded at every function call
+            readMenu();//create a new menu for each table, on request
         return listMenu;
     }
 
