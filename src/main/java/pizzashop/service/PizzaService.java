@@ -1,6 +1,6 @@
 package pizzashop.service;
 
-import pizzashop.model.MenuItem;
+import pizzashop.model.MenuDataModel;
 import pizzashop.model.Payment;
 import pizzashop.model.PaymentType;
 import pizzashop.repository.MenuRepository;
@@ -18,7 +18,7 @@ public class PizzaService {
         this.payRepo=payRepo;
     }
 
-    public List<MenuItem> getMenuData(){return menuRepo.getMenu();}
+    public List<MenuDataModel> getMenuData(){return menuRepo.getMenu();}
 
     public List<Payment> getPayments(){return payRepo.getAll(); }
 

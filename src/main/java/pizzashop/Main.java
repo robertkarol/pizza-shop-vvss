@@ -64,6 +64,13 @@ public class Main extends Application {
         kitchenGUI.KitchenGUI();
     }
 
-    public static void main(String[] args) { launch(args);
+    public static void main(String[] args) {
+        try {
+            launch(args);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
