@@ -1,7 +1,5 @@
 package pizzashop.repository;
 
-import javafx.collections.ObservableList;
-import pizzashop.model.MenuDataModel;
 import pizzashop.model.Payment;
 import pizzashop.model.PaymentType;
 

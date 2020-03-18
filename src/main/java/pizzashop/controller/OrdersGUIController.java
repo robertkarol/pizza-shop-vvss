@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import pizzashop.model.MenuDataModel;
-import pizzashop.service.PaymentAlert;
+import pizzashop.model.PaymentType;
 import pizzashop.service.PizzaService;
 
 import java.util.Calendar;
@@ -71,6 +71,52 @@ public class OrdersGUIController {
 
     }
 
+    public void showPaymentAlert() {
+        Alert paymentAlert = new Alert(Alert.AlertType.CONFIRMATION);
+
+        paymentAlert.setTitle("Payment for Table "+tableNumber);
+        paymentAlert.setHeaderText("Total amount: " + totalAmount);
+        paymentAlert.setContentText("Please choose payment option");
+
+        ButtonType cardPayment = new ButtonType("Pay by Card");
+        ButtonType cashPayment = new ButtonType("Pay Cash");
+        ButtonType cancel = new ButtonType("Cancel");
+
+        paymentAlert.getButtonTypes().setAll(cardPayment, cashPayment, cancel);
+        Optional<ButtonType> result = paymentAlert.showAndWait();
+
+        if (result.get() == cardPayment) {
+            cardPayment();
+            service.addPayment(tableNumber, PaymentType.Card,totalAmount);
+        } else if (result.get() == cashPayment) {
+            cashPayment();
+            service.addPayment(tableNumber, PaymentType.Cash,totalAmount);
+        } else if (result.get() == cancel) {
+            cancelPayment();
+        } else {
+            cancelPayment();
+        }
+    }
+
+    private void cardPayment() {
+        System.out.println("--------------------------");
+        System.out.println("Paying by card...");
+        System.out.println("Please insert your card!");
+        System.out.println("--------------------------");
+    }
+    private void cashPayment() {
+        System.out.println("--------------------------");
+        System.out.println("Paying cash...");
+        System.out.println("Please show the cash...!");
+        System.out.println("--------------------------");
+    }
+    private void cancelPayment()
+    {
+        System.out.println("--------------------------");
+        System.out.println("Payment choice needed...");
+        System.out.println("--------------------------");
+    }
+
     private void initData(){
         menuData = FXCollections.observableArrayList(service.getMenuData());
         menuData.setAll(service.getMenuData());
@@ -103,8 +149,7 @@ public class OrdersGUIController {
             System.out.println("Table: " + tableNumber);
             System.out.println("Total: " + getTotalAmount());
             System.out.println("--------------------------");
-            PaymentAlert pay = new PaymentAlert(service);
-            pay.showPaymentAlert(tableNumber, this.getTotalAmount());
+            showPaymentAlert();
         });
     }
 
@@ -134,13 +179,12 @@ public class OrdersGUIController {
 
         //Controller for Add to order Button
         addToOrder.setOnAction(event -> {
-            orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuDataModel>(){
-            @Override
-            public void changed(ObservableValue<? extends MenuDataModel> observable, MenuDataModel oldValue, MenuDataModel newValue){
-            oldValue.setQuantity(orderQuantity.getValue());
-            orderTable.getSelectionModel().selectedItemProperty().removeListener(this);
-                }
-            });
+            orderTable.getSelectionModel().selectedItemProperty().addListener(
+                    (ChangeListener<MenuDataModel>) (observable, oldValue, newValue) -> {
+                Integer quantity = orderQuantity.getValue();
+                if(oldValue!=null && quantity!=null)
+                    oldValue.setQuantity(quantity);
+                });
         });
 
         //Controller for Exit table Button
