@@ -20,9 +20,8 @@ public class PaymentRepository {
     private void readPayments(){
         ClassLoader classLoader = PaymentRepository.class.getClassLoader();
         File file = new File(classLoader.getResource(filename).getFile());
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(file));
+
+        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = null;
             while((line=br.readLine())!=null){
                 Payment payment=getPayment(line);
@@ -30,7 +29,6 @@ public class PaymentRepository {
                                                 // such situation was not handled
                 paymentList.add(payment);
             }
-            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -64,15 +62,12 @@ public class PaymentRepository {
         ClassLoader classLoader = PaymentRepository.class.getClassLoader();
         File file = new File(classLoader.getResource(filename).getFile());
 
-        BufferedWriter bw = null;
-        try {
-            bw = new BufferedWriter(new FileWriter(file));
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (Payment p:paymentList) {
                 System.out.println(p.toString());
                 bw.write(p.toString());
                 bw.newLine();
             }
-            bw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

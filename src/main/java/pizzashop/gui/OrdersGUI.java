@@ -26,7 +26,6 @@ public class OrdersGUI {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/OrdersGUIFXML.fxml"));
 
-            //vBoxOrders = FXMLLoader.load(getClass().getResource("/fxml/OrdersGUIFXML.fxml"));
             vBoxOrders = loader.load();
             OrdersGUIController ordersCtrl= loader.getController();
             ordersCtrl.setService(service, tableNumber);

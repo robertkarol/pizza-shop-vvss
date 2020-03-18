@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class KitchenGUI {
 
-    public void KitchenGUI() {
+    public void init() {
         VBox vBoxKitchen = null;
 
         try {
@@ -32,7 +32,6 @@ public class KitchenGUI {
                 Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like to exit Kitchen window?", ButtonType.YES, ButtonType.NO);
                 Optional<ButtonType> result = exitAlert.showAndWait();
                 if (result.get() == ButtonType.YES){
-                    //Stage stage = (Stage) this.getScene().getWindow();
                     stage.close();
                 }
                 // consume event
