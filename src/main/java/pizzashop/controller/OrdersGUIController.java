@@ -49,7 +49,7 @@ public class OrdersGUIController {
     public static double getTotalAmount() {
         return totalAmount;
     }
-    public void setTotalAmount(double totalAmount) {
+    public static synchronized void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
