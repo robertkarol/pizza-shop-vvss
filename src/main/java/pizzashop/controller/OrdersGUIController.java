@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import pizzashop.model.MenuDataModel;
-import pizzashop.gui.OrdersGUI;
 import pizzashop.service.PaymentAlert;
 import pizzashop.service.PizzaService;
 
@@ -43,7 +42,7 @@ public class OrdersGUIController {
     @FXML
     private Button payOrder;
     @FXML
-    private Button newOrder;
+    private Button exitTable; // C11: rename newOrder to exitTable. Name was misleading since the button does exit action.
 
     private   List<String> orderList = FXCollections.observableArrayList();
     private List<Double> orderPaymentList = FXCollections.observableArrayList();
@@ -145,11 +144,11 @@ public class OrdersGUIController {
         });
 
         //Controller for Exit table Button
-        newOrder.setOnAction(event -> {
+        exitTable.setOnAction(event -> {
             Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Exit table?",ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> result = exitAlert.showAndWait();
             if (result.get() == ButtonType.YES){
-                Stage stage = (Stage) newOrder.getScene().getWindow();
+                Stage stage = (Stage) exitTable.getScene().getWindow();
                 stage.close();
                 }
         });
