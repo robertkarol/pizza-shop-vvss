@@ -41,9 +41,8 @@ public class Main extends Application {
                 Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like to exit the Main window?", ButtonType.YES, ButtonType.NO);
                 Optional<ButtonType> result = exitAlert.showAndWait();
                 if (result.get() == ButtonType.YES){
-                    //Stage stage = (Stage) this.getScene().getWindow();
-                    System.out.println("Incasari cash: "+service.getTotalAmount(PaymentType.Cash));
-                    System.out.println("Incasari card: "+service.getTotalAmount(PaymentType.Card));
+                    System.out.println("Incasari cash: "+service.getTotalAmount(PaymentType.CASH));
+                    System.out.println("Incasari card: "+service.getTotalAmount(PaymentType.CARD));
 
                     primaryStage.close();
                 }
@@ -61,7 +60,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(box));
         primaryStage.show();
         KitchenGUI kitchenGUI = new KitchenGUI();
-        kitchenGUI.KitchenGUI();
+        kitchenGUI.init();
     }
 
     public static void main(String[] args) {
