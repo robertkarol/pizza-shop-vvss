@@ -17,16 +17,19 @@ public class KitchenGUIController {
     @FXML
     public Button ready;
 
-    public static  ObservableList<String> order = FXCollections.observableArrayList();
+    protected static final ObservableList<String> order = FXCollections.observableArrayList();
     private Object selectedOrder;
     private Calendar now = Calendar.getInstance();
-    private String extractedTableNumberString = new String();
+    private String extractedTableNumberString = "";
     private int extractedTableNumberInteger;
     //thread for adding data to kitchenOrderList
-    public  Thread addOrders = new Thread(new Runnable() {
+    public final Thread addOrders = new Thread(new Runnable() {
         @Override
         public void run() {
-            while (true) {
+            int j=0;
+            boolean b=true;
+            while (b) {
+                j++;
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
@@ -38,6 +41,7 @@ public class KitchenGUIController {
                   } catch (InterruptedException ex) {
                     break;
                 }
+               b=j<Integer.MIN_VALUE;
             }
         }
     });

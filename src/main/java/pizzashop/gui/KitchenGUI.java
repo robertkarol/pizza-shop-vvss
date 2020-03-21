@@ -31,6 +31,7 @@ public class KitchenGUI {
             public void handle(WindowEvent event) {
                 Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like to exit Kitchen window?", ButtonType.YES, ButtonType.NO);
                 Optional<ButtonType> result = exitAlert.showAndWait();
+                if(result.isPresent()){
                 if (result.get() == ButtonType.YES){
                     stage.close();
                 }
@@ -41,6 +42,7 @@ public class KitchenGUI {
                 else {
                     event.consume();
                 }
+            }
             }
 
             });
