@@ -44,7 +44,9 @@ public class MainGUIController  {
 
     PizzaService service;
 
-    public MainGUIController(){}
+    public MainGUIController(){
+        // Do nothing because of X and Y.
+    }
 
     public void setService(PizzaService service){
         this.service=service;

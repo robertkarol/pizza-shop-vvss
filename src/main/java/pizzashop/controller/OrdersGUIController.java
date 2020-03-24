@@ -43,26 +43,27 @@ public class OrdersGUIController {
     private Button payOrder;
     @FXML
     private Button exitTable; // C11: rename newOrder to exitTable. Name was misleading since the button does exit action.
-
+    private String ix="--------------------------";
     private   List<String> orderList = FXCollections.observableArrayList();
     private List<Double> orderPaymentList = FXCollections.observableArrayList();
-    public static double getTotalAmount() {
+    public static synchronized double getTotalAmount() {
         return totalAmount;
     }
     public static synchronized void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+        OrdersGUIController.totalAmount = totalAmount;
     }
 
     private PizzaService service;
     private int tableNumber;
 
-    public ObservableList<String> observableList;
-    private TableView<MenuDataModel> table = new TableView<MenuDataModel>();
-    private ObservableList<MenuDataModel> menuData;// = FXCollections.observableArrayList();
+    protected static  ObservableList<String> observableList;
+    private TableView<MenuDataModel> table = new TableView<>();
     private Calendar now = Calendar.getInstance();
     private static double totalAmount;
 
-    public OrdersGUIController(){ }
+    public OrdersGUIController(){
+        // Do nothing because of X and Y.
+    }
 
     public void setService(PizzaService service, int tableNumber){
         this.service=service;
@@ -84,7 +85,7 @@ public class OrdersGUIController {
 
         paymentAlert.getButtonTypes().setAll(cardPayment, cashPayment, cancel);
         Optional<ButtonType> result = paymentAlert.showAndWait();
-
+        if(result.isPresent()){
         if (result.get() == cardPayment) {
             cardPayment();
             service.addPayment(tableNumber, PaymentType.CARD,totalAmount);
@@ -96,28 +97,31 @@ public class OrdersGUIController {
         } else {
             cancelPayment();
         }
+        }
     }
 
     private void cardPayment() {
-        System.out.println("--------------------------");
+        System.out.println(ix);
         System.out.println("Paying by card...");
         System.out.println("Please insert your card!");
-        System.out.println("--------------------------");
+        System.out.println(ix);
     }
     private void cashPayment() {
-        System.out.println("--------------------------");
+
+        System.out.println(ix);
         System.out.println("Paying cash...");
         System.out.println("Please show the cash...!");
-        System.out.println("--------------------------");
+        System.out.println(ix);
     }
     private void cancelPayment()
     {
-        System.out.println("--------------------------");
+        System.out.println(ix);
         System.out.println("Payment choice needed...");
-        System.out.println("--------------------------");
+        System.out.println(ix);
     }
 
     private void initData(){
+        ObservableList<MenuDataModel> menuData;
         menuData = FXCollections.observableArrayList(service.getMenuData());
         menuData.setAll(service.getMenuData());
         orderTable.setItems(menuData);
@@ -134,8 +138,8 @@ public class OrdersGUIController {
         });
 
         //Controller for Order Served Button
-        orderServed.setOnAction(event -> {orderStatus.setText("Served at: " + now.get(Calendar.HOUR)+":"+now.get(Calendar.MINUTE));
-        });
+        orderServed.setOnAction(event -> orderStatus.setText("Served at: " + now.get(Calendar.HOUR)+":"+now.get(Calendar.MINUTE))
+        );
 
         //Controller for Pay Order Button
         payOrder.setOnAction(event -> {
@@ -145,16 +149,15 @@ public class OrdersGUIController {
                     .collect(Collectors.toList());
             setTotalAmount(orderPaymentList.stream().mapToDouble(e->e.doubleValue()).sum());
             orderStatus.setText("Total amount: " + getTotalAmount());
-            System.out.println("--------------------------");
+            System.out.println(ix);
             System.out.println("Table: " + tableNumber);
             System.out.println("Total: " + getTotalAmount());
-            System.out.println("--------------------------");
+            System.out.println(ix);
             showPaymentAlert();
         });
     }
 
     public void initialize(){
-
         //populate table view with menuData from OrderGUI
         table.setEditable(true);
         tableMenuItem.setCellValueFactory(
@@ -165,7 +168,7 @@ public class OrdersGUIController {
                 new PropertyValueFactory<MenuDataModel, Integer>("quantity"));
 
         //bind pizzaTypeLabel and quantity combo box with the selection on the table view
-        orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuDataModel>() {
+        orderTable.getSelectionModel().selectedItemProperty().addListener(new  ChangeListener<MenuDataModel>() {
         @Override
         public void changed(ObservableValue<? extends MenuDataModel> observable, MenuDataModel oldValue, MenuDataModel newValue) {
            pizzaTypeLabel.textProperty().bind(newValue.menuItemProperty());
@@ -178,14 +181,14 @@ public class OrdersGUIController {
         orderQuantity.setPromptText("Quantity");
 
         //Controller for Add to order Button
-        addToOrder.setOnAction(event -> {
+        addToOrder.setOnAction(event ->
             orderTable.getSelectionModel().selectedItemProperty().addListener(
                     (ChangeListener<MenuDataModel>) (observable, oldValue, newValue) -> {
                 Integer quantity = orderQuantity.getValue();
                 if(oldValue!=null && quantity!=null)
                     oldValue.setQuantity(quantity);
-                });
-        });
+                })
+        );
 
         //Controller for Exit table Button
         exitTable.setOnAction(event -> {
