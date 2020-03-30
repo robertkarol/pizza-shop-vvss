@@ -23,6 +23,8 @@ public class PizzaService {
     public List<Payment> getPayments(){return payRepo.getAll(); }
 
     public void addPayment(int table, PaymentType type, double amount){
+        if(table < 1 || table > 8 || amount < 0)
+            throw new IllegalArgumentException("Invalid table or amount!");
         Payment payment= new Payment(table, type, amount);
         payRepo.add(payment);
     }
