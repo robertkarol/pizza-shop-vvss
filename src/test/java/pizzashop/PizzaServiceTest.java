@@ -83,8 +83,8 @@ class PizzaServiceTest {
 
 
     //After
-    @AfterEach
-    void tearDownEach() {
+    @AfterAll
+    static void tearDown() {
         ClassLoader classLoader = PaymentRepository.class.getClassLoader();
         File file = new File(classLoader.getResource(pathToPayments).getFile());
 
