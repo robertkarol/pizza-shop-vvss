@@ -2,7 +2,8 @@ package pizzashop;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import pizzashop.model.PaymentType;
 import pizzashop.repository.MenuRepository;
 import pizzashop.repository.PaymentRepository;
@@ -12,16 +13,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Timeout(2)
 class PizzaServiceTest {
     private static PizzaService service;
-    private final static double validAmount = 20.5;
     private final static String pathToPayments = "data/payments.txt";
     private static List<String> initialPayments;
-    private static int filePaymentsLines;
 
 
 
@@ -43,14 +44,37 @@ class PizzaServiceTest {
         return lines;
     }
 
+    @Disabled
+    private static Stream<Arguments> validParamsProvider()
+    {
+        return Stream.of(
+                Arguments.arguments(1,0),
+                Arguments.arguments(2,0.01),
+                Arguments.arguments(7,Double.MAX_VALUE-1),
+                Arguments.arguments(8,Double.MAX_VALUE)
+        );
+
+    }
+
+    @Disabled
+    private static Stream<Arguments> invalidParamsProvider()
+    {
+        return Stream.of(
+                Arguments.arguments(0, 10.5),
+                Arguments.arguments(9, 12.5),
+                Arguments.arguments(5, -0.01),
+                Arguments.arguments(-1,-5.5)
+        );
+    }
+
+
 
 
     //Before
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUpEach() {
         //initial payments in file
         initialPayments = readPayments();
-        filePaymentsLines = initialPayments.size();
 
         //service
         service = new PizzaService(new MenuRepository(), new PaymentRepository());
@@ -77,22 +101,30 @@ class PizzaServiceTest {
 
 
     //Tests
-    @DisplayName("TCs with valid table numbers!")
-    @ParameterizedTest(name="nrTable used: {argumentsWithNames}")
-    @ValueSource(ints = {1,2,7,8})
-    void tcsOK(int tableNumber) {
-        service.addPayment(tableNumber, PaymentType.CASH, validAmount);
+    @DisplayName("TCs with valid input parameters!")
+    @ParameterizedTest
+    @MethodSource("validParamsProvider")
+    void testAddPaymentValid(int tableNumber, double amount) {
+        //arrange
+        //setUpEach method
 
-        int currentSize = readPayments().size();
-        assertTrue(currentSize == (filePaymentsLines+1));
-        filePaymentsLines+=1;
+        //act
+        service.addPayment(tableNumber, PaymentType.CASH, amount);
+
+        //assert
+        assertTrue(readPayments().size() == initialPayments.size()+1);
     }
 
-    @DisplayName("TCs with invalid table numbers!")
-    @ParameterizedTest(name="nrTable used: {argumentsWithNames}")
-    @ValueSource(ints = {0,9})
-    void tcsNotOK(int tableNumber) {
+    @DisplayName("TCs with invalid parameters!")
+    @ParameterizedTest
+    @MethodSource("invalidParamsProvider")
+    void testAddPaymentInvalid(int tableNumber, double amount) {
+        //arrange
+        //setUpEach method
+
+
+        //act & assert
         assertThrows(IllegalArgumentException.class,
-                ()-> service.addPayment(tableNumber, PaymentType.CARD, validAmount));
+                ()-> service.addPayment(tableNumber, PaymentType.CARD, amount));
     }
 }
