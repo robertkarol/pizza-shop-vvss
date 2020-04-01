@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>testspec Prj237 - srir2406_BBT</title>
+<link type="text/css" rel="stylesheet" href="https://www.scs.ubbcluj.ro/testlink/gui/themes/default/css/tl_documents.css" />
+<style type="text/css" media="print">.notprintable { display:none;}</style>
+</head>
+<body>
+<div>
+<div style="float:right;">TestLink Community [configure $tlCfg-&gt;document_generator-&gt;company_name]</div>
+<div>&nbsp;</div><hr />
+<p style="text-align: center;"><img alt="TestLink logo" title="configure using $tlCfg->document_generator->company_logo" height="53" src="https://www.scs.ubbcluj.ro/testlink/gui/themes/default/images/tl-logo-transparent-25.png" /></div>
+<div class="doc_title"><p>Test Specification</p></div>
+<div class="doc_title" style="text-align:left;margin: auto;"><p>Test Project: Prj237<br>Test Suite: Prj237 - srir2406_BBT</p></div>
+<div class="summary"><p id="printedby">Printed by TestLink on 01/04/2020</p></div>
+<div class="pagefooter" id="copyright">2012 &copy; TestLink Community</div>
+<h1 class="general" style="page-break-before: always">Table Of Contents</h1><div class="toc"><b><p style="padding-left: 20px;"><a href="#toc_1">1. srir2406_BBT</a></p></b>
+<p style="padding-left: 45px;"><a href="#toc_tc40570">Prj237-6: TestCase_F01_ECP_Valid</a></p><p style="padding-left: 45px;"><a href="#toc_tc40572">Prj237-7: TestCase_F01_ECP_Invalid</a></p><p style="padding-left: 45px;"><a href="#toc_tc40574">Prj237-8: TestCase_F01_BVA_Valid</a></p><p style="padding-left: 45px;"><a href="#toc_tc40576">Prj237-9: TestCase_F01_BVA_Invalid</a></p></div><h1 class="doclevel" >Scope</h1>
+<div class="txtlevel"><p>
+	Testing project for group 237</p></div>
+ <br/><a name='toc_1'></a>
+<h1 class='doclevel'>1. Test Suite : srir2406_BBT</h1>
+<a name="toc_tc40570"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="3">Test Case Prj237-6: TestCase_F01_ECP_Valid</th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="2">srir2406</td></tr>
+<tr><td colspan="3"><span class="label">Summary:</span><br /><p>
+	Test pentru un numar valid al mesei</p>
+</td></tr><tr><td colspan="3"><span class="label">Preconditions:</span><br /><p>
+	table in [1, 8]</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="2">Manual</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="2"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="2">Medium</td></tr>
+<tr><td colspan="3"></td></tr><tr><td > name of the test method:</td><td  colspan = "2" >testAddPaymentValid</td></tr>
+<tr><td > name of the autotest class:</td><td  colspan = "2" >PizzaServiceTest</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="2">srir2406_F01:  F01<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span><td colspan="2">&nbsp;None<br></td></tr>
+</table>
+</div>
+<a name="toc_tc40572"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="3">Test Case Prj237-7: TestCase_F01_ECP_Invalid</th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="2">srir2406</td></tr>
+<tr><td colspan="3"><span class="label">Summary:</span><br /><p>
+	<span style="font-family: &quot;Trebuchet MS&quot;, Arial, Verdana, sans-serif; font-size: 11.7px; background-color: rgb(238, 238, 238);">Test pentru un numar invalid al mesei</span></p>
+</td></tr><tr><td colspan="3"><span class="label">Preconditions:</span><br /><p>
+	table not in [1, 8]</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="2">Manual</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="2"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="2">Medium</td></tr>
+<tr><td colspan="3"></td></tr><tr><td > name of the test method:</td><td  colspan = "2" >testAddPaymentInvalid</td></tr>
+<tr><td > name of the autotest class:</td><td  colspan = "2" >PizzaServiceTest</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="2">srir2406_F01:  F01<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span><td colspan="2">&nbsp;None<br></td></tr>
+</table>
+</div>
+<a name="toc_tc40574"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="3">Test Case Prj237-8: TestCase_F01_BVA_Valid</th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="2">srir2406</td></tr>
+<tr><td colspan="3"><span class="label">Summary:</span><br /><p>
+	Test pentru amount valid</p>
+</td></tr><tr><td colspan="3"><span class="label">Preconditions:</span><br /><p>
+	amount &gt; 0</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="2">Manual</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="2"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="2">Medium</td></tr>
+<tr><td colspan="3"></td></tr><tr><td > name of the test method:</td><td  colspan = "2" >testAddPaymentValid</td></tr>
+<tr><td > name of the autotest class:</td><td  colspan = "2" >PizzaServiceTest</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="2">srir2406_F01:  F01<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span><td colspan="2">&nbsp;None<br></td></tr>
+</table>
+</div>
+<a name="toc_tc40576"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="3">Test Case Prj237-9: TestCase_F01_BVA_Invalid</th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="2">srir2406</td></tr>
+<tr><td colspan="3"><span class="label">Summary:</span><br /><p>
+	Test pentru amount invalid</p>
+</td></tr><tr><td colspan="3"><span class="label">Preconditions:</span><br /><p>
+	amount &lt; 0</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="2">Manual</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="2"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="2">Medium</td></tr>
+<tr><td colspan="3"></td></tr><tr><td > name of the test method:</td><td  colspan = "2" >testAddPaymentInvalid</td></tr>
+<tr><td > name of the autotest class:</td><td  colspan = "2" >PizzaServiceTest</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="2">srir2406_F01:  F01<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span><td colspan="2">&nbsp;None<br></td></tr>
+</table>
+</div>
+
+</body>
+</html>
