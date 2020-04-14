@@ -6,22 +6,25 @@ import pizzashop.model.PaymentType;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class PaymentRepository {
     private static String filename = "data/payments.txt";
     private List<Payment> paymentList;
+    private StringBuilder paymentBuilder;
+    private File filePayments;
 
     public PaymentRepository(){
         this.paymentList = new ArrayList<>();
+        this.paymentBuilder = new StringBuilder();
+        ClassLoader classLoader = PaymentRepository.class.getClassLoader();
+        filePayments = new File(Objects.requireNonNull(classLoader.getResource(filename)).getFile());
         readPayments();
     }
 
     private void readPayments(){
-        ClassLoader classLoader = PaymentRepository.class.getClassLoader();
-        File file = new File(classLoader.getResource(filename).getFile());
-
-        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(filePayments))) {
             String line = null;
             while((line=br.readLine())!=null){
                 Payment payment=getPayment(line);
@@ -55,17 +58,18 @@ public class PaymentRepository {
     }
 
     public void writeAll(){
-        ClassLoader classLoader = PaymentRepository.class.getClassLoader();
-        File file = new File(classLoader.getResource(filename).getFile());
+        paymentBuilder.setLength(0);
+        for (Payment p:paymentList) {
+            System.out.println(p.toString());
+            paymentBuilder.append(p.toString());
+            paymentBuilder.append(System.lineSeparator());
+        }
 
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            for (Payment p:paymentList) {
-                System.out.println(p.toString());
-                bw.write(p.toString());
-                bw.newLine();
-            }
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(filePayments))) {
+            bw.write(paymentBuilder.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            paymentList.remove(paymentList.size()-1); //sync memory with file
+            throw new IllegalStateException(e);
         }
     }
 

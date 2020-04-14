@@ -12,17 +12,19 @@ import pizzashop.service.PizzaService;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Timeout(2)
 class PizzaServiceTest {
     private static PizzaService service;
     private final static String pathToPayments = "data/payments.txt";
     private static List<String> initialPayments;
+    private static List<String> previousPayments;
+    private static File filePayments;
 
 
 
@@ -30,12 +32,9 @@ class PizzaServiceTest {
     @Disabled
     private static List<String> readPayments()
     {
-        //initial payments in file
-        ClassLoader classLoader = PaymentRepository.class.getClassLoader();
-        File file = new File(classLoader.getResource(pathToPayments).getFile());
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePayments))) {
             lines.addAll(br.lines().collect(Collectors.toList()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,10 +70,21 @@ class PizzaServiceTest {
 
 
     //Before
+    @BeforeAll
+    static void setUp() {
+        //get file
+        ClassLoader classLoader = PaymentRepository.class.getClassLoader();
+        filePayments = new File(Objects.requireNonNull(classLoader.getResource(pathToPayments))
+                .getFile());
+
+        //payments before testing
+        initialPayments = readPayments();
+    }
+
     @BeforeEach
     void setUpEach() {
         //initial payments in file
-        initialPayments = readPayments();
+        previousPayments = readPayments();
 
         //service
         service = new PizzaService(new MenuRepository(), new PaymentRepository());
@@ -85,10 +95,7 @@ class PizzaServiceTest {
     //After
     @AfterAll
     static void tearDown() {
-        ClassLoader classLoader = PaymentRepository.class.getClassLoader();
-        File file = new File(classLoader.getResource(pathToPayments).getFile());
-
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(filePayments))) {
             for (String line: initialPayments) {
                 bw.write(line);
                 bw.newLine();
@@ -101,7 +108,7 @@ class PizzaServiceTest {
 
 
     //Tests
-    @DisplayName("TCs with valid input parameters!")
+    @DisplayName("BBT -> TCs with valid input parameters!")
     @ParameterizedTest
     @MethodSource("validParamsProvider")
     void testAddPaymentValid(int tableNumber, double amount) {
@@ -112,19 +119,60 @@ class PizzaServiceTest {
         service.addPayment(tableNumber, PaymentType.CASH, amount);
 
         //assert
-        assertTrue(readPayments().size() == initialPayments.size()+1);
+        assertEquals(readPayments().size(), previousPayments.size() + 1);
     }
 
-    @DisplayName("TCs with invalid parameters!")
+    @DisplayName("BBT -> TCs with invalid parameters!")
     @ParameterizedTest
     @MethodSource("invalidParamsProvider")
     void testAddPaymentInvalid(int tableNumber, double amount) {
         //arrange
         //setUpEach method
 
-
         //act & assert
         assertThrows(IllegalArgumentException.class,
                 ()-> service.addPayment(tableNumber, PaymentType.CARD, amount));
+    }
+
+    @DisplayName("WBT -> TCs with valid input parameters!")
+    @Test
+    void addPaymentValidWBT() {
+        //arrange
+        //setUpEach method
+
+        //act
+        service.addPayment(1, PaymentType.CASH, 10);
+
+        //assert
+        assertEquals(readPayments().size(), previousPayments.size() + 1);
+    }
+
+    @DisplayName("WBT -> TCs with invalid input parameters!")
+    @Test
+    void addPaymentInvalidWBT() {
+        //arrange
+        //setUpEach method
+
+        //act & assert
+        assertThrows(IllegalArgumentException.class,
+                ()-> service.addPayment(0, PaymentType.CARD, 12.5));
+        assertThrows(IllegalArgumentException.class,
+                ()-> service.addPayment(8, PaymentType.CARD, -1.5));
+    }
+
+    @DisplayName("WBT -> TC with invalid state!")
+    @Test
+    void addPaymentInvalidStateWBT() {
+        //arrange
+        //setUpEach method
+
+        //act & assert
+        assertTrue(filePayments.setWritable(false));
+
+        assertThrows(IllegalStateException.class,
+                ()-> service.addPayment(2, PaymentType.CARD, 30.2));
+        assertEquals(readPayments().size(), previousPayments.size());
+
+        assertTrue(filePayments.setWritable(true));
     }
 }
