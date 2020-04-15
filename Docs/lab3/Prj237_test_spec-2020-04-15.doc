@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>testspec Prj237 - srir2406_WBT</title>
+<link type="text/css" rel="stylesheet" href="https://www.scs.ubbcluj.ro/testlink/gui/themes/default/css/tl_documents.css" />
+<style type="text/css" media="print">.notprintable { display:none;}</style>
+</head>
+<body>
+<div>
+<div style="float:right;">TestLink Community [configure $tlCfg-&gt;document_generator-&gt;company_name]</div>
+<div>&nbsp;</div><hr />
+<p style="text-align: center;"><img alt="TestLink logo" title="configure using $tlCfg->document_generator->company_logo" height="53" src="https://www.scs.ubbcluj.ro/testlink/gui/themes/default/images/tl-logo-transparent-25.png" /></div>
+<div class="doc_title"><p>Test Specification</p></div>
+<div class="doc_title" style="text-align:left;margin: auto;"><p>Test Project: Prj237<br>Test Suite: Prj237 - srir2406_WBT</p></div>
+<div class="summary"><p id="printedby">Printed by TestLink on 15/04/2020</p></div>
+<div class="pagefooter" id="copyright">2012 &copy; TestLink Community</div>
+<h1 class="general" style="page-break-before: always">Table Of Contents</h1><div class="toc"><b><p style="padding-left: 20px;"><a href="#toc_1">1. srir2406_WBT</a></p></b>
+<p style="padding-left: 45px;"><a href="#toc_tc44911">Prj237-53: TestCase_F02_Valid</a></p><p style="padding-left: 45px;"><a href="#toc_tc44913">Prj237-54: TestCase_F02_Invalid</a></p><p style="padding-left: 45px;"><a href="#toc_tc46448">Prj237-63: TestCase_F02_Invalid2</a></p></div><h1 class="doclevel" >Scope</h1>
+<div class="txtlevel"><p>
+	Testing project for group 237</p></div>
+ <br/><a name='toc_1'></a>
+<h1 class='doclevel'>1. Test Suite : srir2406_WBT</h1>
+<a name="toc_tc44911"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="3">Test Case Prj237-53: TestCase_F02_Valid</th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="2">srir2406</td></tr>
+<tr><td colspan="3"><span class="label">Summary:</span><br /><p>
+	Test cu parametri valizi pentru acoperirea adaugarii cu succes</p>
+</td></tr><tr><td colspan="3"><span class="label">Preconditions:</span><br /><p>
+	table in [1, 8]</p>
+<p>
+	paymentType in {CASH, CARD}</p>
+<p>
+	amount &gt; 0</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="2">Manual</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="2"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="2">Medium</td></tr>
+<tr><td colspan="3"></td></tr><tr><td > name of the test method:</td><td  colspan = "2" ></td></tr>
+<tr><td > name of the autotest class:</td><td  colspan = "2" ></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="2">srir2406_F02:  F02<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span><td colspan="2">&nbsp;None<br></td></tr>
+</table>
+</div>
+<a name="toc_tc44913"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="3">Test Case Prj237-54: TestCase_F02_Invalid</th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="2">srir2406</td></tr>
+<tr><td colspan="3"><span class="label">Summary:</span><br /><p>
+	Test cu parametri invalizi pentru acoperirea aruncarii exceptiilor</p>
+</td></tr><tr><td colspan="3"><span class="label">Preconditions:</span><br /><p>
+	table not in [1, 8] or amount &lt; 0</p>
+<p>
+	paymentType in {CASH, CARD}&nbsp;</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="2">Manual</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="2"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="2">Medium</td></tr>
+<tr><td colspan="3"></td></tr><tr><td > name of the test method:</td><td  colspan = "2" ></td></tr>
+<tr><td > name of the autotest class:</td><td  colspan = "2" ></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="2">srir2406_F02:  F02<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span><td colspan="2">&nbsp;None<br></td></tr>
+</table>
+</div>
+<a name="toc_tc46448"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="3">Test Case Prj237-63: TestCase_F02_Invalid2</th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="2">srir2406</td></tr>
+<tr><td colspan="3"><span class="label">Summary:</span><br /><p>
+	Test cu fisier ce nu poate fi scris pentru acoperirea aruncarii exceptiei la scrierea fisierului</p>
+</td></tr><tr><td colspan="3"><span class="label">Preconditions:</span><br /><p>
+	fisier inexistent sau care nu paote fi scris</p>
+<p style="margin-top: 0px; font-family: &quot;Trebuchet MS&quot;, Arial, Verdana, sans-serif; font-size: 11.7px; background-color: rgb(238, 238, 238);">
+	table in [1, 8]</p>
+<p style="font-family: &quot;Trebuchet MS&quot;, Arial, Verdana, sans-serif; font-size: 11.7px; background-color: rgb(238, 238, 238);">
+	paymentType in {CASH, CARD}</p>
+<p style="font-family: &quot;Trebuchet MS&quot;, Arial, Verdana, sans-serif; font-size: 11.7px; background-color: rgb(238, 238, 238);">
+	amount &gt; 0</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="2">Manual</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="2"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="2">Medium</td></tr>
+<tr><td colspan="3"></td></tr><tr><td > name of the test method:</td><td  colspan = "2" ></td></tr>
+<tr><td > name of the autotest class:</td><td  colspan = "2" ></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="2">&nbsp;None<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span><td colspan="2">&nbsp;None<br></td></tr>
+</table>
+</div>
+
+</body>
+</html>
