@@ -108,6 +108,7 @@ class PizzaServiceTest {
 
 
     //Tests
+    @Test
     @DisplayName("BBT -> TCs with valid input parameters!")
     @ParameterizedTest
     @MethodSource("validParamsProvider")
@@ -122,6 +123,7 @@ class PizzaServiceTest {
         assertEquals(readPayments().size(), previousPayments.size() + 1);
     }
 
+    @Test
     @DisplayName("BBT -> TCs with invalid parameters!")
     @ParameterizedTest
     @MethodSource("invalidParamsProvider")
