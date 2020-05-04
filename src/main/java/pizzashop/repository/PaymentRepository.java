@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 
 public class PaymentRepository {
     private static String filename = "data/payments.txt";
-    private List<Payment> paymentList;
+    protected List<Payment> paymentList;
     private StringBuilder paymentBuilder;
     private File filePayments;
 
@@ -23,7 +23,7 @@ public class PaymentRepository {
         readPayments();
     }
 
-    private void readPayments(){
+    protected void readPayments(){
         try(BufferedReader br = new BufferedReader(new FileReader(filePayments))) {
             String line = null;
             while((line=br.readLine())!=null){
@@ -37,7 +37,7 @@ public class PaymentRepository {
         }
     }
 
-    private Payment getPayment(String line){
+    protected Payment getPayment(String line){
         Payment item=null;
         if (line==null|| line.equals("")) return null;
         StringTokenizer st=new StringTokenizer(line, ",");
