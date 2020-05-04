@@ -89,8 +89,6 @@ class PaymentRepositoryUnitTest {
     void test_add() {
         //arrange
         //in setUp & setUpEach methods
-
-        //act
         Payment p = mock(Payment.class);
         when(p.getTableNumber()).thenReturn(8);
         when(p.getType()).thenReturn(PaymentType.CARD);
@@ -98,6 +96,7 @@ class PaymentRepositoryUnitTest {
         String pAsString = p.getTableNumber() + "," + p.getType() + "," + p.getAmount();
         when(p.toString()).thenReturn(pAsString);
 
+        //act
         paymentRepo.add(p);
 
         //assert

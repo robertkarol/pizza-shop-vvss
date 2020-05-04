@@ -102,8 +102,6 @@ public class IntegrationPaymentRepositoryInPizzaServiceTest {
     void test_addPayment() {
         //arrange
         //in setUp & setUpEach methods
-
-        //act
         Payment p = mock(Payment.class);
         when(p.getTableNumber()).thenReturn(7);
         when(p.getType()).thenReturn(PaymentType.CASH);
@@ -111,6 +109,7 @@ public class IntegrationPaymentRepositoryInPizzaServiceTest {
         String pAsString = p.getTableNumber() + "," + p.getType() + "," + p.getAmount();
         when(p.toString()).thenReturn(pAsString);
 
+        //act
         service.addPayment(p.getTableNumber(), p.getType(),p.getAmount());
 
         //assert
